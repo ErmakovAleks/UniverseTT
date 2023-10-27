@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		82601A4008A1095C194BF153 /* Pods_UniverseTestTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B16BA7CDABE8A0488AA7148 /* Pods_UniverseTestTask.framework */; };
+		D91C75972AEBEF2D005F8822 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C75962AEBEF2D005F8822 /* BaseView.swift */; };
+		D91C75992AEBEF87005F8822 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C75982AEBEF87005F8822 /* BaseViewModel.swift */; };
+		D91C759B2AEBEFE6005F8822 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C759A2AEBEFE6005F8822 /* BaseCoordinator.swift */; };
+		D91C759E2AEBF035005F8822 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C759D2AEBF035005F8822 /* Events.swift */; };
+		D91C75A02AEBF1CE005F8822 /* NetworkSessionProcessable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C759F2AEBF1CE005F8822 /* NetworkSessionProcessable.swift */; };
+		D91C75A42AEBF2BC005F8822 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C75A32AEBF2BC005F8822 /* RequestError.swift */; };
+		D91C75A62AEBF325005F8822 /* URLContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C75A52AEBF325005F8822 /* URLContainable.swift */; };
+		D91C75A82AEBF363005F8822 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C75A72AEBF363005F8822 /* HTTPMethod.swift */; };
+		D91C75AA2AEBF45A005F8822 /* NetworkServiceContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C75A92AEBF45A005F8822 /* NetworkServiceContainable.swift */; };
+		D91C75AC2AEBF513005F8822 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C75AB2AEBF513005F8822 /* NetworkService.swift */; };
 		D920A9142AEBDED60090C83A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D920A9132AEBDED60090C83A /* AppDelegate.swift */; };
 		D920A9182AEBDED60090C83A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D920A9172AEBDED60090C83A /* ViewController.swift */; };
 		D920A91D2AEBDED80090C83A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D920A91C2AEBDED80090C83A /* Assets.xcassets */; };
@@ -17,6 +27,16 @@
 /* Begin PBXFileReference section */
 		1B16BA7CDABE8A0488AA7148 /* Pods_UniverseTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UniverseTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82B4544AAC1F978D638A1984 /* Pods-UniverseTestTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UniverseTestTask.debug.xcconfig"; path = "Target Support Files/Pods-UniverseTestTask/Pods-UniverseTestTask.debug.xcconfig"; sourceTree = "<group>"; };
+		D91C75962AEBEF2D005F8822 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		D91C75982AEBEF87005F8822 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		D91C759A2AEBEFE6005F8822 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		D91C759D2AEBF035005F8822 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		D91C759F2AEBF1CE005F8822 /* NetworkSessionProcessable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionProcessable.swift; sourceTree = "<group>"; };
+		D91C75A32AEBF2BC005F8822 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		D91C75A52AEBF325005F8822 /* URLContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLContainable.swift; sourceTree = "<group>"; };
+		D91C75A72AEBF363005F8822 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		D91C75A92AEBF45A005F8822 /* NetworkServiceContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceContainable.swift; sourceTree = "<group>"; };
+		D91C75AB2AEBF513005F8822 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D920A9102AEBDED60090C83A /* UniverseTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniverseTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D920A9132AEBDED60090C83A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D920A9172AEBDED60090C83A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +75,85 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D91C75932AEBEDDB005F8822 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				D920A91C2AEBDED80090C83A /* Assets.xcassets */,
+				D920A91E2AEBDED80090C83A /* LaunchScreen.storyboard */,
+				D920A9212AEBDED80090C83A /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		D91C75942AEBEE86005F8822 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				D920A9132AEBDED60090C83A /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		D91C75952AEBEED7005F8822 /* BaseComponents */ = {
+			isa = PBXGroup;
+			children = (
+				D91C75962AEBEF2D005F8822 /* BaseView.swift */,
+				D91C75982AEBEF87005F8822 /* BaseViewModel.swift */,
+				D91C759A2AEBEFE6005F8822 /* BaseCoordinator.swift */,
+			);
+			path = BaseComponents;
+			sourceTree = "<group>";
+		};
+		D91C759C2AEBF023005F8822 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D91C759D2AEBF035005F8822 /* Events.swift */,
+				D91C759F2AEBF1CE005F8822 /* NetworkSessionProcessable.swift */,
+				D91C75A52AEBF325005F8822 /* URLContainable.swift */,
+				D91C75A92AEBF45A005F8822 /* NetworkServiceContainable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		D91C75A12AEBF26F005F8822 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D91C75A22AEBF28A005F8822 /* NetworkService */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		D91C75A22AEBF28A005F8822 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				D91C75A32AEBF2BC005F8822 /* RequestError.swift */,
+				D91C75A72AEBF363005F8822 /* HTTPMethod.swift */,
+				D91C75AB2AEBF513005F8822 /* NetworkService.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		D91C75AD2AEBF632005F8822 /* FlowComponents */ = {
+			isa = PBXGroup;
+			children = (
+				D91C75AE2AEBF66D005F8822 /* OnboardingFlow */,
+			);
+			path = FlowComponents;
+			sourceTree = "<group>";
+		};
+		D91C75AE2AEBF66D005F8822 /* OnboardingFlow */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OnboardingFlow;
+			sourceTree = "<group>";
+		};
+		D91C75AF2AEBF68C005F8822 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 		D920A9072AEBDED60090C83A = {
 			isa = PBXGroup;
 			children = (
@@ -76,11 +175,14 @@
 		D920A9122AEBDED60090C83A /* UniverseTestTask */ = {
 			isa = PBXGroup;
 			children = (
-				D920A9132AEBDED60090C83A /* AppDelegate.swift */,
+				D91C75AF2AEBF68C005F8822 /* Coordinators */,
+				D91C75AD2AEBF632005F8822 /* FlowComponents */,
+				D91C75A12AEBF26F005F8822 /* Managers */,
+				D91C759C2AEBF023005F8822 /* Protocols */,
+				D91C75952AEBEED7005F8822 /* BaseComponents */,
+				D91C75942AEBEE86005F8822 /* Application */,
+				D91C75932AEBEDDB005F8822 /* SupportingFiles */,
 				D920A9172AEBDED60090C83A /* ViewController.swift */,
-				D920A91C2AEBDED80090C83A /* Assets.xcassets */,
-				D920A91E2AEBDED80090C83A /* LaunchScreen.storyboard */,
-				D920A9212AEBDED80090C83A /* Info.plist */,
 			);
 			path = UniverseTestTask;
 			sourceTree = "<group>";
@@ -199,7 +301,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D91C75A42AEBF2BC005F8822 /* RequestError.swift in Sources */,
+				D91C75A62AEBF325005F8822 /* URLContainable.swift in Sources */,
+				D91C759E2AEBF035005F8822 /* Events.swift in Sources */,
+				D91C75A02AEBF1CE005F8822 /* NetworkSessionProcessable.swift in Sources */,
+				D91C759B2AEBEFE6005F8822 /* BaseCoordinator.swift in Sources */,
+				D91C75AA2AEBF45A005F8822 /* NetworkServiceContainable.swift in Sources */,
+				D91C75972AEBEF2D005F8822 /* BaseView.swift in Sources */,
+				D91C75992AEBEF87005F8822 /* BaseViewModel.swift in Sources */,
 				D920A9182AEBDED60090C83A /* ViewController.swift in Sources */,
+				D91C75A82AEBF363005F8822 /* HTTPMethod.swift in Sources */,
+				D91C75AC2AEBF513005F8822 /* NetworkService.swift in Sources */,
 				D920A9142AEBDED60090C83A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,7 +458,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = UniverseTestTask/Info.plist;
+				INFOPLIST_FILE = UniverseTestTask/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -373,7 +485,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = UniverseTestTask/Info.plist;
+				INFOPLIST_FILE = UniverseTestTask/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
