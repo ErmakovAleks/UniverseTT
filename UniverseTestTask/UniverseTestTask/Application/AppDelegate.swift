@@ -3,7 +3,6 @@
 //  UniverseTestTask
 //
 //  Created by Aleksandr Ermakov on 27.10.2023.
-//  Copyright © 2023 IDAP. All rights reserved.
 	
 
 import UIKit
