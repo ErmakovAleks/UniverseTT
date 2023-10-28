@@ -6,6 +6,7 @@
 	
 
 import UIKit
+import RxSwift
 
 public class ChildCoordinator: UIViewController {
     
@@ -13,6 +14,7 @@ public class ChildCoordinator: UIViewController {
     // MARK: Variables
     
     public var navController = UINavigationController()
+    public let disposeBag = DisposeBag()
     
     // MARK: -
     // MARK: View Life Cycle

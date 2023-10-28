@@ -21,6 +21,10 @@ fileprivate extension Constants {
     static let continueButtonHeight: CGFloat = 56.0
     static let continueButtonHorizontalInset: CGFloat = 30.0
     static let continueButtonBottomInset: CGFloat = 86.0
+    
+    static let termsFontSize: CGFloat = 12.0
+    static let termsHorizontalInset: CGFloat = 36.0
+    static let termsBottomInset: CGFloat = 34.0
 }
 
 class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEvents> {
@@ -29,7 +33,8 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
     // MARK: Variables
     
     private var collectionView: UICollectionView?
-    private var continueButton = UIButton()
+    private let continueButton = UIButton()
+    private let termsLabel = UILabel()
     private let numberOfCards = 4
     
     // MARK: -
@@ -63,6 +68,7 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
         
         self.collectionSetup()
         self.continueButtonSetup()
+        self.termsLabelSetup()
     }
     
     override func style() {
@@ -70,6 +76,7 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
         
         self.collectionStyle()
         self.continueButtonStyle()
+        self.termsLabelStyle()
     }
     
     override func layout() {
@@ -77,6 +84,7 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
         
         self.continueButtonLayout()
         self.collectionLayout()
+        self.termsLabelLayout()
     }
     
     // MARK: -
@@ -152,6 +160,84 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
             $0.horizontalEdges.equalToSuperview().inset(Constants.continueButtonHorizontalInset)
             $0.bottom.equalToSuperview().inset(Constants.continueButtonBottomInset)
             $0.height.equalTo(Constants.continueButtonHeight)
+        }
+    }
+    
+    // MARK: -
+    // MARK: Prepare TermsLabel
+    
+    private func termsLabelSetup() {
+        let termsOfUse = NSAttributedString(
+            string: "Terms of Use",
+            attributes: [ .foregroundColor : UIColor.link ]
+        )
+        
+        let privacyPolicy = NSAttributedString(
+            string: "Privacy Policy",
+            attributes: [ .foregroundColor : UIColor.link ]
+        )
+        
+        let subscriptionTerms = NSAttributedString(
+            string: "Subscription Terms",
+            attributes: [ .foregroundColor : UIColor.link ]
+        )
+        
+        let final = NSMutableAttributedString(string: "By continuing you accept our:\n")
+        final.append(termsOfUse)
+        final.append(NSAttributedString(string: ", "))
+        final.append(privacyPolicy)
+        final.append(NSAttributedString(string: " and "))
+        final.append(subscriptionTerms)
+        
+        self.termsLabel.isUserInteractionEnabled = true
+        self.termsLabel.textColor = .white
+        self.termsLabel.attributedText = final
+        self.addGestureRecognizerToTermsLabel()
+        
+        self.view.addSubview(self.termsLabel)
+    }
+    
+    private func termsLabelStyle() {
+        self.termsLabel.font = UIFont.systemFont(ofSize: Constants.termsFontSize)
+        self.termsLabel.textAlignment = .center
+        self.termsLabel.numberOfLines = 0
+    }
+    
+    private func termsLabelLayout() {
+        self.termsLabel.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(Constants.termsHorizontalInset)
+            $0.bottom.equalToSuperview().inset(Constants.termsBottomInset)
+        }
+    }
+    
+    private func addGestureRecognizerToTermsLabel() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleTermsTap(_:)))
+        tapGesture.numberOfTapsRequired = 1
+        self.termsLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleTermsTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = self.termsLabel.text else { return }
+        
+        let termsOfUseRange = (text as NSString).range(of: "Terms of Use")
+        let privacyPolicyRange = (text as NSString).range(of: "Privacy Policy")
+        let subscriptionTermsRange = (text as NSString).range(of: "Subscription Terms")
+        
+        if gesture.didTapAttributedTextInLabel(
+            label: self.termsLabel,
+            inRange: termsOfUseRange
+        ) {
+            self.viewModel.handleTermsOfUse()
+        } else if gesture.didTapAttributedTextInLabel(
+            label: self.termsLabel,
+            inRange: privacyPolicyRange
+        ) {
+            self.viewModel.handlePrivacyPolicy()
+        } else if gesture.didTapAttributedTextInLabel(
+            label: self.termsLabel,
+            inRange: subscriptionTermsRange
+        ) {
+            self.viewModel.handleSubscriptionTerms()
         }
     }
 }
