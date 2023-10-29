@@ -12,6 +12,7 @@ enum OnboardingViewModelOutputEvents: Events {
     case termsOfUse
     case privacyPolicy
     case subscriptionTerms
+    case needShowAlert(String, String)
 }
 
 final class OnboardingViewModel: BaseViewModel<OnboardingViewModelOutputEvents> {
@@ -29,5 +30,9 @@ final class OnboardingViewModel: BaseViewModel<OnboardingViewModelOutputEvents> 
     
     func handleSubscriptionTerms() {
         self.outputEventsEmiter.accept(.subscriptionTerms)
+    }
+    
+    func handleAlert(title: String, description: String) {
+        self.outputEventsEmiter.accept(.needShowAlert(title, description))
     }
 }

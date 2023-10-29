@@ -49,6 +49,8 @@ final class OnboardingCoordinator: ChildCoordinator {
             self.navController.present(privacyPolicy(), animated: true)
         case .subscriptionTerms:
             self.navController.present(subscriptionTerms(), animated: true)
+        case .needShowAlert(let title, let description):
+            self.showAlert(title: title, description: description)
         }
     }
     
@@ -98,5 +100,16 @@ final class OnboardingCoordinator: ChildCoordinator {
     
     private func handle(events: SubscriptionTermsViewModelOutputEvents) {
         
+    }
+    
+    // MARK: -
+    // MARK: Private functions
+    
+    private func showAlert(title: String, description: String) {
+        let alert = UIAlertController(title: title, message: description, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default)
+        
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
 }

@@ -1,0 +1,103 @@
+{
+  "identifier" : "EDB81079",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "59E0E47E",
+      "localizations" : [
+
+      ],
+      "name" : "MonthlySubscription",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "80D8C640",
+          "introductoryOffer" : {
+            "displayPrice" : "0.99",
+            "internalID" : "494D353A",
+            "paymentMode" : "none"
+          },
+          "localizations" : [
+            {
+              "description" : "You are now a premium user of UniverseAI!",
+              "displayName" : "MonthlySubscription",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.ermakov.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "PremiumSubscription",
+          "subscriptionGroupID" : "59E0E47E",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

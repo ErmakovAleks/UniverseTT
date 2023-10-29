@@ -6,6 +6,7 @@
 	
 
 import UIKit
+import StoreKit
 import RxSwift
 import RxCocoa
 import SnapKit
@@ -116,6 +117,16 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
         
         self.removeRestoreButton.rx.tap.bind { [weak self] in
             self?.removeRestore()
+        }
+        .disposed(by: disposeBag)
+        
+        self.subscribeButton.rx.tap.bind { [weak self] in
+            self?.productRequest()
+        }
+        .disposed(by: disposeBag)
+        
+        self.restorePurchaseButton.rx.tap.bind { [weak self] in
+            self?.restoreRequest()
         }
         .disposed(by: disposeBag)
     }
@@ -457,5 +468,64 @@ extension OnboardingView: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.configure(with: OnboardingCellModel.data[indexPath.item])
         
         return cell
+    }
+}
+
+extension OnboardingView: SKProductsRequestDelegate, SKPaymentTransactionObserver {
+    
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        if let product = response.products.first {
+            self.purchase(product: product)
+        } else {
+            self.showAlert(
+                title: "The product is not available",
+                description: "Unfortunately, the selected product is not available at the moment"
+            )
+        }
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        transactions.forEach {
+            switch $0.transactionState {
+            case .purchasing:
+                print("<!> Customer is in the process of purchase")
+            case .purchased:
+                SKPaymentQueue.default().finishTransaction($0)
+                self.showAlert(title: "Congratulaitons!", description: "You are Premium-user now!")
+            case .failed:
+                SKPaymentQueue.default().finishTransaction($0)
+                self.showAlert(title: "Oh, no!", description: "Something went wrong :-(")
+            case .restored:
+                self.showAlert(title: "Welcome back!", description: "Subscription is restored!")
+            case .deferred:
+                self.showAlert(title: "Attention!", description: "Your purchase was deferred!")
+            @unknown default:
+                break
+            }
+        }
+    }
+    
+    private func productRequest() {
+        if SKPaymentQueue.canMakePayments() {
+            let productRequest = SKProductsRequest(productIdentifiers: ["com.ermakov.monthly"])
+            productRequest.delegate = self
+            productRequest.start()
+        }
+    }
+    
+    private func restoreRequest() {
+        if SKPaymentQueue.canMakePayments() {
+            SKPaymentQueue.default().restoreCompletedTransactions()
+        }
+    }
+    
+    private func purchase(product: SKProduct) {
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.default().add(self)
+        SKPaymentQueue.default().add(payment)
+    }
+    
+    private func showAlert(title: String, description: String) {
+        self.viewModel.handleAlert(title: title, description: description)
     }
 }
