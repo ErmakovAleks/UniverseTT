@@ -9,6 +9,7 @@ import UIKit
 
 extension UIColor {
     
+    static let inactiveGrey = UIColor(red: 144/255, green: 153/255, blue: 166/255, alpha: 1.0)
     static let background = UIColor(red: 45/255, green: 47/255, blue: 64/255, alpha: 1.0)
     static let activeBlue = UIColor(red: 0/255, green: 154/255, blue: 255/255, alpha: 1.0)
     static let darkSpace = UIColor(red: 25/255, green: 31/255, blue: 40/255, alpha: 1.0)

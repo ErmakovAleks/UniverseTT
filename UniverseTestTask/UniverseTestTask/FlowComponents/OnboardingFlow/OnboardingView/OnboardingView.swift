@@ -6,6 +6,8 @@
 	
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 
 fileprivate extension Constants {
@@ -17,14 +19,29 @@ fileprivate extension Constants {
     static let minimumInteritemSpacing: CGFloat = 0.0
     static let minimumLineSpacing: CGFloat = 16.0
     
-    static let continueButtonFontSize: CGFloat = 17.0
-    static let continueButtonHeight: CGFloat = 56.0
-    static let continueButtonHorizontalInset: CGFloat = 30.0
-    static let continueButtonBottomInset: CGFloat = 86.0
+    static let buttonFontSize: CGFloat = 17.0
+    static let buttonHeight: CGFloat = 56.0
+    static let buttonHorizontalInset: CGFloat = 30.0
+    static let buttonBottomInset: CGFloat = 86.0
+    
+    static let purcaseButtonHeight: CGFloat = 18.0
+    static let purcahseButtonWidth: CGFloat = 135.0
+    static let purchaseButtonFontSize: CGFloat = 14.0
+    static let purchaseButtonTopInset: CGFloat = 57.0
+    static let purchaseButtonLeadingInset: CGFloat = 16.0
+    
+    static let removeRestoreButtonSize: CGFloat = 24.0
+    static let removeRestoreButtonTopInset: CGFloat = 54.0
+    static let removeRestoreButtonTrailingInset: CGFloat = 16.0
     
     static let termsFontSize: CGFloat = 12.0
     static let termsHorizontalInset: CGFloat = 36.0
     static let termsBottomInset: CGFloat = 34.0
+    
+    static let pageControlTopOffset: CGFloat = 32.0
+    static let pageControlHeight: CGFloat = 4.0
+    
+    static let animationTimeInterval: Double = 1.0
 }
 
 class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEvents> {
@@ -33,9 +50,13 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
     // MARK: Variables
     
     private var collectionView: UICollectionView?
+    private let restorePurchaseButton = UIButton()
+    private let removeRestoreButton = UIButton()
     private let continueButton = UIButton()
+    private let subscribeButton = UIButton()
+    private let pageControl = OnboardingPageControl(pagesNumber: OnboardingCellModel.data.count)
     private let termsLabel = UILabel()
-    private let numberOfCards = 4
+    private let numberOfCards = OnboardingCellModel.data.count
     
     // MARK: -
     // MARK: ViewController Life Cycle
@@ -44,6 +65,59 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
         super.viewDidLoad()
         
         self.prepareBackground()
+    }
+    
+    // MARK: -
+    // MARK: Overrided functions
+    
+    override func setup() {
+        super.setup()
+        
+        self.collectionSetup()
+        self.restorePurchaseButtonSetup()
+        self.removeRestoreButtonSetup()
+        self.continueButtonSetup()
+        self.subscribeButtonSetup()
+        self.pageControlSetup()
+        self.termsLabelSetup()
+    }
+    
+    override func style() {
+        super.style()
+        
+        self.collectionStyle()
+        self.restorePurchaseButtonStyle()
+        self.removeRestoreButtonStyle()
+        self.continueButtonStyle()
+        self.subscribeButtonStyle()
+        self.termsLabelStyle()
+    }
+    
+    override func layout() {
+        super.layout()
+        
+        self.restorePurchaseButtonLayout()
+        self.removeRestoreButtonLayout()
+        self.continueButtonLayout()
+        self.subscribeButtonLayout()
+        self.collectionLayout()
+        self.pageControlLayout()
+        self.termsLabelLayout()
+    }
+    
+    // MARK: -
+    // MARK: Prepare Bindings
+    
+    override func prepareBindings(disposeBag: DisposeBag) {
+        self.continueButton.rx.tap.bind { [weak self] in
+            self?.scrollToNextItem()
+        }
+        .disposed(by: disposeBag)
+        
+        self.removeRestoreButton.rx.tap.bind { [weak self] in
+            self?.removeRestore()
+        }
+        .disposed(by: disposeBag)
     }
     
     // MARK: -
@@ -60,31 +134,79 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
         self.view.sendSubviewToBack(backgroundImageView)
     }
     
-    // MARK: -
-    // MARK: Overrided functions
-    
-    override func setup() {
-        super.setup()
+    private func handle(page: Int) {
+        self.pageControl.flipPage(to: page)
         
-        self.collectionSetup()
-        self.continueButtonSetup()
-        self.termsLabelSetup()
+        if page != 0 && page < (self.numberOfCards - 1) {
+            self.continueButton.isHidden = false
+            
+            UIView.animate(withDuration: Constants.animationTimeInterval) {
+                self.termsLabel.alpha = 0.0
+                self.pageControl.alpha = 1.0
+                
+                self.continueButton.alpha = 1.0
+                self.subscribeButton.alpha = 0.0
+                self.restorePurchaseButton.alpha = 0.0
+                self.removeRestoreButton.alpha = 0.0
+            } completion: { _ in
+                self.termsLabel.isHidden = true
+                self.pageControl.isHidden = false
+                self.subscribeButton.isHidden = true
+                self.restorePurchaseButton.isHidden = true
+                self.removeRestoreButton.isHidden = true
+            }
+        } else {
+            if page >= (self.numberOfCards - 1) {
+                self.subscribeButton.isHidden = false
+                self.restorePurchaseButton.isHidden = false
+                self.removeRestoreButton.isHidden = false
+                self.subscribeButton.alpha = 0.0
+                self.restorePurchaseButton.alpha = 0.0
+                self.removeRestoreButton.alpha = 0.0
+            }
+            
+            UIView.animate(withDuration: Constants.animationTimeInterval) {
+                self.termsLabel.alpha = 1.0
+                self.pageControl.alpha = 0.0
+                
+                if page >= (self.numberOfCards - 1) {
+                    self.continueButton.alpha = 0.0
+                    self.subscribeButton.alpha = 1.0
+                    self.restorePurchaseButton.alpha = 1.0
+                    self.removeRestoreButton.alpha = 1.0
+                }
+            } completion: { _ in
+                self.termsLabel.isHidden = false
+                self.pageControl.isHidden = true
+                
+                if page >= (self.numberOfCards - 1) {
+                    self.continueButton.isHidden = true
+                }
+            }
+        }
     }
     
-    override func style() {
-        super.style()
-        
-        self.collectionStyle()
-        self.continueButtonStyle()
-        self.termsLabelStyle()
+    private func removeRestore() {
+        UIView.animate(withDuration: Constants.animationTimeInterval) {
+            self.restorePurchaseButton.alpha = 0.0
+            self.removeRestoreButton.alpha = 0.0
+        } completion: { _ in
+            self.restorePurchaseButton.isHidden = true
+            self.removeRestoreButton.isHidden = true
+        }
     }
     
-    override func layout() {
-        super.layout()
-        
-        self.continueButtonLayout()
-        self.collectionLayout()
-        self.termsLabelLayout()
+    private func scrollToNextItem() {
+        if let index = self.collectionView?.indexPathsForVisibleItems.sorted().last?.row {
+            if index < self.collectionView?.numberOfItems(inSection: 0) ?? 0 {
+                self.handle(page: index)
+                self.collectionView?.scrollToItem(
+                    at: IndexPath(row: index, section: 0),
+                    at: .centeredHorizontally,
+                    animated: true
+                )
+            }
+        }
     }
     
     // MARK: -
@@ -110,12 +232,11 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
         )
         
         layout.pageHandler = { [weak self] index in
-            // Здесь нужно будет передать индекс в pageControl
-            print("<!> card # \(index)")
+            self?.handle(page: index)
         }
 
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        self.collectionView?.decelerationRate = .fast // ?? может и не понадобится
+        self.collectionView?.decelerationRate = .fast
         self.collectionView?.delegate = self
         self.collectionView?.dataSource = self
         self.collectionView?.register(OnboardingCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: OnboardingCollectionViewCell.self))
@@ -137,29 +258,108 @@ class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEve
     }
     
     // MARK: -
-    // MARK: Prepare ContinueButton
+    // MARK: Prepare Buttons
+    
+    private func restorePurchaseButtonSetup() {
+        self.view.addSubview(self.restorePurchaseButton)
+        self.restorePurchaseButton.isHidden = true
+    }
+    
+    private func removeRestoreButtonSetup() {
+        self.view.addSubview(self.removeRestoreButton)
+        self.removeRestoreButton.isHidden = true
+    }
     
     private func continueButtonSetup() {
         self.view.addSubview(self.continueButton)
     }
     
-    private func continueButtonStyle() {
-        self.continueButton.setTitle("Continue", for: .normal)
-        self.continueButton.setTitleColor(.darkSpace, for: .normal)
-        self.continueButton.titleLabel?.font = UIFont.systemFont(
-            ofSize: Constants.continueButtonFontSize,
+    private func subscribeButtonSetup() {
+        self.view.addSubview(self.subscribeButton)
+        self.subscribeButton.isHidden = true
+    }
+    
+    private func restorePurchaseButtonStyle() {
+        self.restorePurchaseButton.setTitle("Restore Purchase", for: .normal)
+        self.restorePurchaseButton.setTitleColor(.inactiveGrey, for: .normal)
+        self.restorePurchaseButton.titleLabel?.font = UIFont.systemFont(
+            ofSize: Constants.purchaseButtonFontSize,
             weight: .semibold
         )
         
-        self.continueButton.backgroundColor = .white
-        self.continueButton.layer.cornerRadius = Constants.continueButtonHeight / 2
+        self.restorePurchaseButton.backgroundColor = .clear
+    }
+    
+    private func removeRestoreButtonStyle() {
+        self.removeRestoreButton.setImage(UIImage(named: "cancel"), for: .normal)
+    }
+    
+    private func continueButtonStyle() {
+        self.buttonStyle(button: self.continueButton, title: "Continue")
+    }
+    
+    private func subscribeButtonStyle() {
+        self.buttonStyle(button: self.subscribeButton, title: "Try Free & Subscribe")
+    }
+    
+    private func buttonStyle(button: UIButton, title: String) {
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.darkSpace, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(
+            ofSize: Constants.buttonFontSize,
+            weight: .semibold
+        )
+        
+        button.backgroundColor = .white
+        button.layer.cornerRadius = Constants.buttonHeight / 2
+    }
+    
+    private func restorePurchaseButtonLayout() {
+        self.restorePurchaseButton.snp.makeConstraints{
+            $0.width.equalTo(Constants.purcahseButtonWidth)
+            $0.height.equalTo(Constants.purcaseButtonHeight)
+            $0.top.equalToSuperview().inset(Constants.purchaseButtonTopInset)
+            $0.leading.equalToSuperview().inset(Constants.purchaseButtonLeadingInset)
+        }
+    }
+    
+    private func removeRestoreButtonLayout() {
+        self.removeRestoreButton.snp.makeConstraints {
+            $0.size.equalTo(Constants.removeRestoreButtonSize)
+            $0.top.equalToSuperview().inset(Constants.removeRestoreButtonTopInset)
+            $0.trailing.equalToSuperview().inset(Constants.removeRestoreButtonTrailingInset)
+        }
     }
     
     private func continueButtonLayout() {
-        self.continueButton.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(Constants.continueButtonHorizontalInset)
-            $0.bottom.equalToSuperview().inset(Constants.continueButtonBottomInset)
-            $0.height.equalTo(Constants.continueButtonHeight)
+        self.buttonLayout(button: self.continueButton)
+    }
+    
+    private func subscribeButtonLayout() {
+        self.buttonLayout(button: self.subscribeButton)
+    }
+    
+    private func buttonLayout(button: UIButton) {
+        button.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(Constants.buttonHorizontalInset)
+            $0.bottom.equalToSuperview().inset(Constants.buttonBottomInset)
+            $0.height.equalTo(Constants.buttonHeight)
+        }
+    }
+    
+    // MARK: -
+    // MARK: Prepare PageControl
+    
+    private func pageControlSetup() {
+        self.view.addSubview(self.pageControl)
+        self.pageControl.alpha = 0.0
+    }
+    
+    private func pageControlLayout() {
+        self.pageControl.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(Constants.pageControlHeight)
+            $0.top.equalTo(self.continueButton.snp.bottom).offset(Constants.pageControlTopOffset)
         }
     }
     

@@ -31,7 +31,7 @@ struct OnboardingCellModel {
         ),
         OnboardingCellModel(
             title: "Upgrade for Unlimited AI Capabilities",
-            description: "7-Day Free Trial, then $19,99/month, autorenewable",
+            description: "7-Day Free Trial,\n then $19,99/month, autorenewable",
             imageName: "Illustration4"
         )
     ]
