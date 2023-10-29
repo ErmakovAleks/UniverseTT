@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CenterSnapCollectionViewFlowLayout: UICollectionViewFlowLayout {
+final class CenterSnapCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     var pageHandler: ((Int) -> ())?
     

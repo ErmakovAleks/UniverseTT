@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class MainCoordinator: BaseCoordinator {
+final class MainCoordinator: BaseCoordinator {
     
     // MARK: -
     // MARK: Variables

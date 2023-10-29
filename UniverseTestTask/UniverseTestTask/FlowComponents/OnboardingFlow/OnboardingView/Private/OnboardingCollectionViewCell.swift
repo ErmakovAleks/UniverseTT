@@ -20,7 +20,7 @@ fileprivate extension Constants {
     static let descriptionFont: CGFloat = 17.0
 }
 
-class OnboardingCollectionViewCell: UICollectionViewCell {
+final class OnboardingCollectionViewCell: UICollectionViewCell {
     
     // MARK: -
     // MARK: Variables

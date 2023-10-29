@@ -45,7 +45,7 @@ fileprivate extension Constants {
     static let animationTimeInterval: Double = 1.0
 }
 
-class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEvents> {
+final class OnboardingView: BaseView<OnboardingViewModel, OnboardingViewModelOutputEvents> {
     
     // MARK: -
     // MARK: Variables
